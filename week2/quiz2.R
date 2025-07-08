@@ -1,7 +1,13 @@
 # Quiz 2
-# Problem 1.
+# Load all required libraries at the top
 library(AppliedPredictiveModeling)
 library(caret)
+library(ggplot2)
+library(Hmisc)
+library(plyr)
+library(RANN)
+
+# Problem 1.
 data(AlzheimerDisease)
 
 adData = data.frame(diagnosis, predictors)
@@ -13,9 +19,7 @@ training = adData[trainIndex,]
 testing = adData[-trainIndex,]
 
 # Problem 2.
-library(AppliedPredictiveModeling)
 data(concrete)
-library(caret)
 set.seed(975)
 inTrain = createDataPartition(mixtures$CompressiveStrength, p=3/4)[[1]]
 training = mixtures[inTrain,]
@@ -27,13 +31,11 @@ index <- seq_along(1:nrow(training))
 ggplot(data=training, aes(x=index, y=CompressiveStrength)) + geom_point() + 
   theme_bw()
 # Step-like pattern -> 4 categories
-library(Hmisc)
 cutCompressiveStrength <- cut2(training$CompressiveStrength, g=4)
 summary(cutCompressiveStrength)
 ggplot(data=training, aes(y=index, x=cutCompressiveStrength)) + 
   geom_boxplot() + geom_jitter(col="blue") + theme_bw()
 # Another way
-library(plyr)
 splitOn <- cut2(training$Age, g=4)
 splitOn <- mapvalues(splitOn, 
                      from=levels(factor(splitOn)), 
@@ -44,9 +46,7 @@ plot(training$CompressiveStrength, col=splitOn)
 # variables so there may be a variable missing.
 
 # Problem 3.
-library(AppliedPredictiveModeling)
 data(concrete)
-library(caret)
 set.seed(975)
 inTrain = createDataPartition(mixtures$CompressiveStrength, p=3/4)[[1]]
 training = mixtures[ inTrain,]
@@ -60,8 +60,6 @@ ggplot(data=training, aes(x=Superplasticizer)) + geom_histogram() + theme_bw()
 # those values will be -Inf.
 
 # Problem 4.
-library(caret)
-library(AppliedPredictiveModeling)
 set.seed(3433)
 data(AlzheimerDisease)
 adData = data.frame(diagnosis,predictors)
@@ -74,8 +72,6 @@ preProc <- preProcess(ss, method='pca', thresh=0.9,
 preProc$rotation # 9
 
 # Problem 5.
-library(caret)
-library(AppliedPredictiveModeling)
 set.seed(3433)
 data(AlzheimerDisease)
 adData = data.frame(diagnosis,predictors)
